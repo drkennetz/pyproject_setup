@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=42.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "--cov=PACKAGE_NAME"
+testpaths = [
+  "tests",
+]
+
+[tool.mypy]
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = false
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+no_implicit_reexport = true
+
+# Most of this ruff configuration comes from craft-parts
+[tool.ruff]
+line-length = 88
+extend-exclude = [
+    "__pycache__",
+]
+select = [
+    "E", "F",  # The rules built into Flake8
+    "I",  # isort checking
+    "PLC", "PLE", "PLR", "PLW",  # Pylint
+    # Additional stricter checking than previously enabled:
+    "A",  # Shadowing built-ins.
+    "W",  # PyCodeStyle warnings.
+    "N",  # Pep8 naming
+    "YTT",  # flake8-2020: Misuse of `sys.version` and `sys.version_info`
+    "ANN",  # Annotations
+    "S",  # Checks for common security issues
+    "BLE",  # Blind exception
+    "B",  # Opinionated bugbear linting
+    "C4",  # better comprehensions
+    "T10",  # Ensure we don't leave code that starts the debugger in
+    "ICN",  # Unconventional import aliases.
+    "Q",  # Consistent quotations
+    "RET",  # Return values
+]
+ignore = [
+    "S310", # closes url connection in http request as defined in docs
+    "ANN101", "ANN102",  # Type annotations for `self` and `cls` in methods
+]
+
+[tool.ruff.flake8-annotations]
+suppress-none-returning = true  # We don't need to explicitly point out that a function doesn't return anything
